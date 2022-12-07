@@ -1,4 +1,4 @@
-package cn.phlos.feginTime.utils;
+package cn.phlos.feginTime;
 
 import feign.Client;
 import org.springframework.cloud.netflix.ribbon.SpringClientFactory;
@@ -20,8 +20,8 @@ import cn.phlos.feginTime.annotation.FeignTimeAnnotation;
 public class AAConfig {
 
     @Bean
-    public FeignTimeAnnotation getFeignTimeAnnotation(){
-        return new FeignTimeAnnotation();
+    public FeignTimeAnnotation getFeignTimeAnnotation(FeignTimeOptionsService feignTimeOptionsService){
+        return new FeignTimeAnnotation(feignTimeOptionsService);
     }
 
 

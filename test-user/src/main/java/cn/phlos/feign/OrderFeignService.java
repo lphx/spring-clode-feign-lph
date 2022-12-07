@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface OrderFeignService {
 
     @RequestMapping("/findOrderByUserId")
-    @FeignTime
+    @FeignTime(connectTimeout = 1000)
     String findOrderByUserId();
 
     @RequestMapping({"/findOrderByUserId1"})

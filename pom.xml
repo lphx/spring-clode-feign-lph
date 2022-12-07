@@ -53,13 +53,12 @@
                 <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
                 <version>2.1.4.RELEASE</version>
             </dependency>
+
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>2.2.3.RELEASE</version>
+                <groupId>cn.phlos</groupId>
+                <artifactId>fegin-time-config</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
-
-
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
