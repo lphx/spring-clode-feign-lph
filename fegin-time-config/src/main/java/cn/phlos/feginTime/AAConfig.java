@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 import cn.phlos.feginTime.annotation.FeignTimeAnnotation;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * @ClassName: AAConfig
@@ -20,13 +21,15 @@ import cn.phlos.feginTime.annotation.FeignTimeAnnotation;
 public class AAConfig {
 
     @Bean
+    public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory, SpringClientFactory clientFactory) {
+        return new NewLoadBalancerFeignClient(new Client.Default((SSLSocketFactory)null, (HostnameVerifier)null), cachingFactory, clientFactory);
+    }
+
+    @Bean
     public FeignTimeAnnotation getFeignTimeAnnotation(FeignTimeOptionsService feignTimeOptionsService){
         return new FeignTimeAnnotation(feignTimeOptionsService);
     }
 
 
-    @Bean
-    public Client feignClient(CachingSpringLoadBalancerFactory cachingFactory, SpringClientFactory clientFactory) {
-        return new NewLoadBalancerFeignClient(new Client.Default((SSLSocketFactory)null, (HostnameVerifier)null), cachingFactory, clientFactory);
-    }
+
 }

@@ -11,10 +11,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName: NewLoadBalancerFeignClient
@@ -41,7 +38,7 @@ public class NewLoadBalancerFeignClient extends LoadBalancerFeignClient implemen
 
     private Request.Options getOptions(Request request) {
 
-        if (request != null){
+        if (request == null){
             return null;
         }
 
@@ -83,7 +80,7 @@ public class NewLoadBalancerFeignClient extends LoadBalancerFeignClient implemen
 
 
     private void setOptions(Request.HttpMethod httpMethod, String url, Request.Options options) {
-        Map<Request.HttpMethod, Request.Options> requestOptionsMap = cache.getOrDefault(url, Collections.emptyMap());
+        Map<Request.HttpMethod, Request.Options> requestOptionsMap = cache.getOrDefault(url, new HashMap<>());
         requestOptionsMap.put(httpMethod, options);
         cache.put(url, requestOptionsMap);
     }

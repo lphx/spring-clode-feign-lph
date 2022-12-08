@@ -35,8 +35,6 @@ public class FeignTimeAnnotation implements ApplicationContextAware {
         for (Map.Entry<String, Object> entry : beansWithAnnotation.entrySet()) {
             Class clazz = getFeignClientClass(entry.getKey());
             findAndSetFeignTimeData(clazz);
-
-
         }
     }
 
@@ -45,19 +43,20 @@ public class FeignTimeAnnotation implements ApplicationContextAware {
             if (!method.isAnnotationPresent(FeignTime.class)) {
                 continue;
             }
+            FeignClient feignClient = (FeignClient) clazz.getDeclaredAnnotation(FeignClient.class);
             FeignTime feignTime = method.getDeclaredAnnotation(FeignTime.class);
             for (Annotation annotation : method.getDeclaredAnnotations()) {
-                requestAnnotation(annotation, feignTime);
+                requestAnnotation(annotation, feignTime,feignClient);
             }
 
         }
     }
 
-    private void requestAnnotation(Annotation annotation, FeignTime feignTime) {
+    private void requestAnnotation(Annotation annotation, FeignTime feignTime,FeignClient feignClient) {
         if (annotation instanceof RequestMapping) {
             Arrays.stream(((RequestMapping) annotation).value()).forEach(v -> {
 
-                balancerFeignClient.setAllOptions(v, getFeignTimeToOptions(feignTime));
+                balancerFeignClient.setAllOptions(feignClient.path()+v, getFeignTimeToOptions(feignTime));
             });
             return;
         }
@@ -96,7 +95,7 @@ public class FeignTimeAnnotation implements ApplicationContextAware {
 
 
     Request.Options getFeignTimeToOptions(FeignTime feignTime) {
-        return new Request.Options(feignTime.connectTimeout(), feignTime.connectTimeoutUnit(), feignTime.readTimeout(), feignTime.readTimeoutUnit(), feignTime.followRedirects());
+        return new Request.Options(feignTime.connectTimeout(), feignTime.readTimeout(), feignTime.followRedirects());
     }
 
 

@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 @Documented
 public @interface FeignTime {
 
-     long connectTimeout() default 10000;
+     int connectTimeout() default 10000;
 
-     TimeUnit connectTimeoutUnit() default TimeUnit.MILLISECONDS;
+//     TimeUnit connectTimeoutUnit() default TimeUnit.MILLISECONDS;
 
-     long readTimeout() default 60000;
+     int readTimeout() default 60000;
 
-     TimeUnit readTimeoutUnit() default TimeUnit.MILLISECONDS;
+//     TimeUnit readTimeoutUnit() default TimeUnit.MILLISECONDS;
 
      boolean followRedirects() default true;
     
